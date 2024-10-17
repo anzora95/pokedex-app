@@ -3,4 +3,58 @@
 
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; }
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+.title__text {
+    color: #004080; /* Reemplaza $blue-dark */
+    font-weight: 400;
+    font-size: 30px;
+}
+
+.header__text {
+    color: #0066cc; /* Reemplaza $blue-medium */
+    font-weight: 400;
+    font-size: 35px;
+}
+
+.description__text {
+    color: #808080; /* Reemplaza $gray-medium */
+    font-weight: 400;
+    font-size: 18px;
+}
+
+.profile__title__text {
+    font-size: 40px;
+    font-weight: 700;
+    color: black;
+}
+
+.image__preview {
+    position: relative;
+    display: inline-block;
+}
+
+.align__right {
+    text-align: right;
+}
+
+.align__left {
+    text-align: left;
+}
+
+.align__center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 1rem;
+}
+
+.button__text {
+    font-size: 12px;
+    font-weight: 600;
+    color: #004080; /* Reemplaza $blue-dark */
+}

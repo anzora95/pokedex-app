@@ -14,7 +14,7 @@ export class AccountFormComponent implements OnInit{
   isFetching: boolean = false;
   defaultImageUrl: string = "../../../assets/icons/default_avatar.png";
   profileIcon!: string | ArrayBuffer;
-  profileIconName: string = "Default name";
+  profileIconName: string = "Adjunta una foto";
 
   constructor(private fb: FormBuilder) {}
 
@@ -22,8 +22,6 @@ export class AccountFormComponent implements OnInit{
 
     this.initializeForm();
   }
-
-
   
   private initializeForm(): void {
     this.form = this.fb.group({
@@ -33,6 +31,23 @@ export class AccountFormComponent implements OnInit{
       dui: [null,],
       minors_id: [null]
     });
+  }
+
+  onFileSelected(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.profileIconName = file.name;
+      this.previewImage(file);
+    }
+  }
+
+  private previewImage(file: File): void {
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.profileIcon = reader.result;
+    };
+    reader.readAsDataURL(file);
+    
   }
 
   onSubmit(){

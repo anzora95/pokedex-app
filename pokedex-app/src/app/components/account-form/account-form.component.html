@@ -1,102 +1,55 @@
 <div class="container">
-    <div
-        class="row"
-        *ngIf="!isFetching"
-    >
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <span
-                class="header__text"
-                style="font-weight: bold;"
-            >
+    <div class="row" *ngIf="!isFetching">
+        <div class="col-sm-12 col-xl-12">
+            <span class="header__text" style="font-weight: bold;">
                 ¡Hola!
             </span>
             <span class="header__text">Configuremos tu perfil</span>
         </div>
-        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+
+        <!-- image section -->
+        <div class="col-sm-12 col-xl-6">
             <p class="description__text">Queremos conocerte mejor.</p>
-            <div class="d-flex justify-content-center">
+            <div class="d-flex justify-content-center form__container">
                 <mat-card class="starter__card">
                     <mat-card-header class="d-flex justify-content-center">
-                        <p class="starter__card__title">Imágen Perfil</p>
+                        <p class="starter__card__title">Imágen de Perfil</p>
                     </mat-card-header>
                     <mat-card-content>
                         <div class="d-flex justify-content-center">
                             <div class="image__preview">
-                                <img
-                                    [src]="profileIcon || defaultImageUrl"
-                                    alt="Preview"
-                                    width="220"
-                                    height="220"
-                                    class="round__image"
-                                >
+                                <img [src]="profileIcon || defaultImageUrl" alt="Preview" width="220" height="220" class="round__image">
                             </div>
                         </div>
                         <br>
                         <div class="d-flex justify-content-center">
-                            <input
-                                type="file"
-                                accept="image/*"
-                                
-                                id="fileInput"
-                                style="display: none"
-                            >
-                            <!-- (change)="onFileSelected($event)" -->
-                            <label
-                                for="fileInput"
-                                class="upload__button round-button"
-                            >
+                            <input type="file" accept="image/*" (change)="onFileSelected($event)" id="fileInput" style="display: none">
+                            <label for="fileInput" class="upload__button round-button" style="border-style: dashed;">
                                 {{profileIconName ? profileIconName : "Subir imagen de perfil"}}
                             </label>
                         </div>
                     </mat-card-content>
                 </mat-card>
             </div>
-
-
-
-
-
-
-
         </div>
-        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+
+        <!-- form section -->
+        <div class="col-sm-12 col-xl-6">
             <div class="form__container">
                 <div class="d-flex flex-column justify-content-center">
                     <p class="title__text">Tu información</p>
                     <p class="description__text">
                         Completa la siguiente información para completar tu perfíl.
                     </p>
-                    <form
-                        [formGroup]="form"
-                        (ngSubmit)="onSubmit()"
-                    >
+                    <form [formGroup]="form" (ngSubmit)="onSubmit()">
                         <div class="d-flex flex-column justify-content-center">
-                            <mat-form-field
-                                class="form__fields"
-                                appearance="outline"
-                            >
+                            <mat-form-field class="form__fields" appearance="outline">
                                 <mat-label>Nombre</mat-label>
-                                <input
-                                    matInput
-                                    formControlName="name"
-                                >
+                                <input matInput formControlName="name">
                             </mat-form-field>
-
-
-
-
-
-
-
-                            <mat-form-field
-                                class="form__fields"
-                                appearance="outline"
-                            >
+                            <mat-form-field class="form__fields" appearance="outline">
                                 <mat-label>Pasatiempos</mat-label>
-                                <mat-select
-                                    multiple
-                                    formControlName="hobbies"
-                                >
+                                <mat-select multiple formControlName="hobbies" >
                                     <mat-option value="soccer">Jugar Fútbol</mat-option>
                                     <mat-option value="basquetball">Jugar Basquetball</mat-option>
                                     <mat-option value="tennis">Jugar Tennis</mat-option>
@@ -105,71 +58,26 @@
                                     <mat-option value="gaming">Jugar Videojuegos</mat-option>
                                 </mat-select>
                             </mat-form-field>
-
-
-
-
-
-
-
-                            <mat-form-field
-                                class="form__fields"
-                                appearance="outline"
-                            >
+                            <mat-form-field class="form__fields" appearance="outline">
                                 <mat-label>Cumpleaños</mat-label>
-                                <input
-                                    matInput
-                                    [max]="maxDate"
-                                    [matDatepicker]="picker"
-                                    formControlName="birthday"
-                                >
-                                <mat-datepicker-toggle
-                                    matSuffix
-                                    [for]="picker"
-                                ></mat-datepicker-toggle>
+                                <input matInput [max]="maxDate" [matDatepicker]="picker" formControlName="birthday" >
+                                <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
                                 <mat-datepicker #picker></mat-datepicker>
                             </mat-form-field>
-                            <mat-form-field
-                                class="form__fields"
-                                appearance="outline"
-                                *ngIf="!isMinor"
-                            >
+                            <mat-form-field class="form__fields" appearance="outline" *ngIf="!isMinor">
                                 <mat-label>DUI</mat-label>
-                                <input
-                                    matInput
-                                    formControlName="dui"
-                                    appDuiFormat
-                                >
+                                <input matInput formControlName="dui" appDuiFormat >
                                 <!-- <mat-error *ngIf="form.get('dui').hasError('invalidDuiNumber')">Número de DUI inválido</mat-error> -->
                             </mat-form-field>
-                            <mat-form-field
-                                class="form__fields"
-                                appearance="outline"
-                                *ngIf="isMinor"
-                            >
+                            <mat-form-field class="form__fields" appearance="outline" *ngIf="isMinor" >
                                 <mat-label>Carnet de minoridad</mat-label>
-                                <input
-                                    matInput
-                                    formControlName="minors_id"
-                                >
+                                <input matInput formControlName="minors_id">
                             </mat-form-field>
                             <div class="d-flex justify-content-center">
-                                <button
-                                    mat-raised-button
-                                    class="submit__button"
-                                    type="submit"
-                                    [disabled]="form.invalid"
-                                >
+                                <button mat-raised-button class="submit__button" type="submit" [disabled]="form.invalid" >
                                     Continuar
                                 </button>
                             </div>
-
-
-
-
-
-
-
                         </div>
                     </form>
                 </div>

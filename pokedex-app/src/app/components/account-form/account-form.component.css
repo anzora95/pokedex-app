@@ -1,0 +1,76 @@
+.form__container {
+    padding-top: 17%;
+    max-width: 350px;
+}
+
+.submit__button {
+    width: 222px;
+    height: 50px;
+    border-radius: 10px;
+}
+
+.submit__button:enabled {
+    background-color: #004080; /* Reemplaza $blue-dark */
+    color: white;
+}
+
+.submit__button:hover {
+    background-color: #0066cc; /* Reemplaza $blue-medium */
+}
+
+.submit__button:active {
+    background-color: #3399ff; /* Reemplaza $blue-light */
+}
+
+.form__fields {
+    background-color: white;
+}
+
+.form__fields:hover {
+    background-color: white;
+}
+
+.form__fields:active {
+    background-color: white;
+}
+
+.form__fields .mat-form-field-label {
+    position: absolute;
+    transform: translateY(-50%);
+    background-color: white;
+    padding: 0 8px;
+}
+
+.form__fields input {
+    border: none;
+    outline: none;
+}
+
+.starter__card {
+    background-color: #FFC600; /* Reemplaza $yellow */
+    width: 392px;
+    padding-top: 10px;
+    padding-bottom: 80px;
+    border-radius: 45px;
+}
+
+.starter__card__title {
+    font-size: 30px;
+    font-weight: 400;
+}
+
+.round__image {
+    border: 20px solid white;
+    border-radius: 50%;
+}
+
+.upload__button {
+    position: absolute;
+    background-color: white;
+    font-size: 14px;
+    color: #3399ff; /* Reemplaza $blue-light */
+    padding: 20px 30px;
+    outline: 1px dashed #d3d3d3; /* Reemplaza $gray-light */
+    border-radius: 5px;
+    cursor: pointer;
+}
