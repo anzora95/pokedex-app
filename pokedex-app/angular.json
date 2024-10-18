@@ -16,6 +16,7 @@
             "outputPath": "dist/pokedex-app",
             "index": "src/index.html",
             "main": "src/main.ts",
+            "allowedCommonJsDependencies": ["angular2-text-mask"],
             "polyfills": [
               "zone.js"
             ],

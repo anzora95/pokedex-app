@@ -21,10 +21,14 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatChipsModule} from '@angular/material/chips';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AccountFormComponent } from './components/account-form/account-form.component';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+
+// import Provi
 
 @NgModule({
   declarations: [
@@ -53,10 +57,12 @@ import { AccountFormComponent } from './components/account-form/account-form.com
     MatSnackBarModule,
     MatIconModule,
     MatMenuModule,
+    MatChipsModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxMaskDirective, NgxMaskPipe
   ],
-  providers: [],
+  providers: [provideNgxMask()],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

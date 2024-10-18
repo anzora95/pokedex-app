@@ -10,7 +10,7 @@
         <!-- image section -->
         <div class="col-sm-12 col-xl-6">
             <p class="description__text">Queremos conocerte mejor.</p>
-            <div class="d-flex justify-content-center form__container">
+            <div class="d-flex justify-content-center ">
                 <mat-card class="starter__card">
                     <mat-card-header class="d-flex justify-content-center">
                         <p class="starter__card__title">Imágen de Perfil</p>
@@ -49,13 +49,30 @@
                             </mat-form-field>
                             <mat-form-field class="form__fields" appearance="outline">
                                 <mat-label>Pasatiempos</mat-label>
-                                <mat-select multiple formControlName="hobbies" >
-                                    <mat-option value="soccer">Jugar Fútbol</mat-option>
+                                <mat-select multiple formControlName="hobbies" [(value)]="selectedHobbies" >
+                                    <mat-select-trigger>
+                                        <mat-chip-listbox>
+                                          <mat-chip
+                                            *ngFor="let hobby of selectedHobbies"
+                                            (removed)="removeHobby(hobby)"
+                                            [removable]="true"
+                                          >
+
+                                            {{ hobby }}
+                                            <mat-icon matChipRemove>cancel</mat-icon>
+                                          </mat-chip>
+                                        </mat-chip-listbox>
+                                      </mat-select-trigger>
+                                    <!-- <mat-option value="soccer">Jugar Fútbol</mat-option>
                                     <mat-option value="basquetball">Jugar Basquetball</mat-option>
                                     <mat-option value="tennis">Jugar Tennis</mat-option>
                                     <mat-option value="voleiball">Jugar Voleiball</mat-option>
                                     <mat-option value="fifa">Jugar Fifa</mat-option>
-                                    <mat-option value="gaming">Jugar Videojuegos</mat-option>
+                                    <mat-option value="gaming">Jugar Videojuegos</mat-option> -->
+
+                                    <mat-option *ngFor="let hobby of hobbies" [value]="hobby">
+                                        {{ hobby }}
+                                      </mat-option>
                                 </mat-select>
                             </mat-form-field>
                             <mat-form-field class="form__fields" appearance="outline">
@@ -66,15 +83,16 @@
                             </mat-form-field>
                             <mat-form-field class="form__fields" appearance="outline" *ngIf="!isMinor">
                                 <mat-label>DUI</mat-label>
-                                <input matInput formControlName="dui" appDuiFormat >
-                                <!-- <mat-error *ngIf="form.get('dui').hasError('invalidDuiNumber')">Número de DUI inválido</mat-error> -->
+                                <input matInput formControlName="dui" appDuiFormat mask="00000000-0" >
+                                <mat-error *ngIf="form.get('dui').hasError('isvalidDUI')">Número de DUI inválido</mat-error>
+
                             </mat-form-field>
                             <mat-form-field class="form__fields" appearance="outline" *ngIf="isMinor" >
                                 <mat-label>Carnet de minoridad</mat-label>
-                                <input matInput formControlName="minors_id">
+                                <input matInput formControlName="minors_id" mask="00000000-0">
                             </mat-form-field>
-                            <div class="d-flex justify-content-center">
-                                <button mat-raised-button class="submit__button" type="submit" [disabled]="form.invalid" >
+                            <div class="d-flex justify-content-center mt-4">
+                                <button mat-raised-button class="submit__button " type="submit" [disabled]="form.invalid" >
                                     Continuar
                                 </button>
                             </div>
