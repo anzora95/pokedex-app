@@ -1,0 +1,111 @@
+<div class="container">
+    <div class="row" *ngIf="!isFetching">
+        <div class="col-sm-12 col-xl-12">
+            <span class="header__text" style="font-weight: bold;">
+                ¡Hola!
+            </span>
+            <span class="header__text">Configuremos tu perfil</span>
+        </div>
+
+        <!-- image section -->
+        <div class="col-sm-12 col-xl-6">
+            <p class="description__text">Queremos conocerte mejor.</p>
+            <div class="d-flex justify-content-center ">
+                <mat-card class="starter__card">
+                    <mat-card-header class="d-flex justify-content-center">
+                        <p class="starter__card__title">Imágen de Perfil</p>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <div class="d-flex justify-content-center">
+                            <div class="image__preview">
+                                <img [src]="profileIcon || defaultImageUrl" alt="Preview" width="220" height="220" class="round__image">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="d-flex justify-content-center">
+                            <input type="file" accept="image/*" (change)="onFileSelected($event)" id="fileInput" style="display: none">
+                            <label for="fileInput" class="upload__button round-button" style="border-style: dashed;">
+                                {{profileIconName ? profileIconName : "Subir imagen de perfil"}}
+                            </label>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+
+        <!-- form section -->
+        <div class="col-sm-12 col-xl-6">
+            <div class="form__container">
+                <div class="d-flex flex-column justify-content-center">
+                    <p class="title__text">Tu información</p>
+                    <p class="description__text">
+                        Completa la siguiente información para completar tu perfíl.
+                    </p>
+                    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                        <div class="d-flex flex-column justify-content-center">
+                            <mat-form-field class="form__fields" appearance="outline">
+                                <mat-label>Nombre</mat-label>
+                                <input matInput formControlName="name">
+                            </mat-form-field>
+                            <mat-form-field class="form__fields" appearance="outline">
+                                <mat-label>Pasatiempos</mat-label>
+                                <mat-select multiple formControlName="hobbies" [(value)]="selectedHobbies" >
+                                    <mat-select-trigger>
+                                        <mat-chip-listbox>
+                                          <mat-chip
+                                            *ngFor="let hobby of selectedHobbies"
+                                            (removed)="removeHobby(hobby)"
+                                            [removable]="true"
+                                          >
+
+                                            {{ hobby }}
+                                            <mat-icon matChipRemove>cancel</mat-icon>
+                                          </mat-chip>
+                                        </mat-chip-listbox>
+                                      </mat-select-trigger>
+                                    <!-- <mat-option value="soccer">Jugar Fútbol</mat-option>
+                                    <mat-option value="basquetball">Jugar Basquetball</mat-option>
+                                    <mat-option value="tennis">Jugar Tennis</mat-option>
+                                    <mat-option value="voleiball">Jugar Voleiball</mat-option>
+                                    <mat-option value="fifa">Jugar Fifa</mat-option>
+                                    <mat-option value="gaming">Jugar Videojuegos</mat-option> -->
+
+                                    <mat-option *ngFor="let hobby of hobbies" [value]="hobby">
+                                        {{ hobby }}
+                                      </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field class="form__fields" appearance="outline">
+                                <mat-label>Cumpleaños</mat-label>
+                                <input matInput [max]="maxDate" [matDatepicker]="picker" formControlName="birthday" >
+                                <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                            <mat-form-field class="form__fields" appearance="outline" *ngIf="!isMinor">
+                                <mat-label>DUI</mat-label>
+                                <input matInput formControlName="dui" appDuiFormat mask="00000000-0" >
+                                <mat-error *ngIf="form.get('dui').hasError('isvalidDUI')">Número de DUI inválido</mat-error>
+
+                            </mat-form-field>
+                            <mat-form-field class="form__fields" appearance="outline" *ngIf="isMinor" >
+                                <mat-label>Carnet de minoridad</mat-label>
+                                <input matInput formControlName="minors_id" mask="00000000-0">
+                            </mat-form-field>
+                            <div class="d-flex justify-content-center mt-4">
+                                <button mat-raised-button class="submit__button " type="submit" [disabled]="form.invalid" >
+                                    Continuar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div
+        class="row"
+        *ngIf="isFetching"
+    >
+        <!-- <app-loading></app-loading> -->
+    </div>
+</div>
