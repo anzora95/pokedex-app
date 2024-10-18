@@ -27,6 +27,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AccountFormComponent } from './components/account-form/account-form.component';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { PokemonListComponent } from './components/select-pokemons/pokemon-list/pokemon-list.component';
+import { ProfileCardComponent } from './components/select-pokemons/profile-card/profile-card.component';
+import { SelectPokemonsComponent } from './components/select-pokemons/select-pokemons/select-pokemons.component';
 
 // import Provi
 
@@ -35,6 +38,9 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
     AppComponent,
     HeaderComponent,
     AccountFormComponent,
+    PokemonListComponent,
+    ProfileCardComponent,
+    SelectPokemonsComponent,
     
   ],
   imports: [
