@@ -1,36 +1,20 @@
-<p>profile-card works!</p>
-
-
 <div class="d-flex justify-content-start">
-    <mat-card class="profile__card">
+    <mat-card class="starter__card">
         <mat-card-header
             *ngIf="isPreview"
             class="d-flex justify-content-center"
         >
-            <span class="profile__card__title__preview">{{trainer.name | titlecase}}</span>
+            <span class=" starter__card__title">{{trainer.name | titlecase}}</span>
 
 
         </mat-card-header>
-        <mat-card-header
-            *ngIf="!isPreview"
-            class="d-flex justify-content-between"
-        >
-            <span class="profile__card__title">Entrenador</span>
-            <img
-                src="../../../../assets/icons/trainer_logo.png"
-                alt="pokemon-trainer-logo"
-            >
+        <mat-card-header *ngIf="!isPreview" class="d-flex justify-content-between">
+            <span class="header__text">Entrenador</span>
         </mat-card-header>
         <mat-card-content>
             <div class="d-flex justify-content-center">
                 <div class="image__preview">
-                    <img
-                        [src]="trainer.image_path || defaultImageUrl"
-                        alt="Preview"
-                        width="220"
-                        height="220"
-                        class="round__image"
-                    >
+                    <img [src]="trainer.image_path || defaultImageUrl" alt="Preview" width="220" height="220" class="round__image">
                 </div>
             </div>
             <br>

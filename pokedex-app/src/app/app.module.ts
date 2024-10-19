@@ -30,6 +30,9 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { PokemonListComponent } from './components/select-pokemons/pokemon-list/pokemon-list.component';
 import { ProfileCardComponent } from './components/select-pokemons/profile-card/profile-card.component';
 import { SelectPokemonsComponent } from './components/select-pokemons/select-pokemons/select-pokemons.component';
+import { HttpClientModule } from '@angular/common/http';
+import { PokemonService } from './services/pokemon.service';
+
 
 // import Provi
 
@@ -66,9 +69,11 @@ import { SelectPokemonsComponent } from './components/select-pokemons/select-pok
     MatChipsModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxMaskDirective, NgxMaskPipe
+    NgxMaskDirective, 
+    NgxMaskPipe,
+    HttpClientModule
   ],
-  providers: [provideNgxMask()],
+  providers: [provideNgxMask(), PokemonService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
