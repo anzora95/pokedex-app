@@ -4,11 +4,12 @@ import { Trainer } from 'src/app/models/trainer';
 import { v4 as uuidv4 } from 'uuid';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { TrainerService } from 'src/app/services/trainer.service';
 
 @Component({
   selector: 'app-account-form',
   templateUrl: './account-form.component.html',
-  styleUrls: ['./account-form.component.css']
+  styleUrls: ['./account-form.component.scss']
 })
 export class AccountFormComponent implements OnInit {
 
@@ -26,7 +27,7 @@ export class AccountFormComponent implements OnInit {
   hobbies: string[] = ['Jugar Fútbol', 'Leer', 'Cocinar', 'Nadar', 'Viajar'];
   selectedHobbies: string[] = [];
 
-  constructor(private fb: FormBuilder, private router: Router) { }
+  constructor(private fb: FormBuilder, private router: Router, private trainerService: TrainerService) { }
 
   ngOnInit() {
 
@@ -74,11 +75,8 @@ export class AccountFormComponent implements OnInit {
       null,
     );
 
-    console.log(this.trainer);
-
-
-    // this.trainerService.storeTrainer(this.trainer);
-    this.router.navigate(['/']);
+    this.trainerService.storeTrainer(this.trainer);
+    this.router.navigate(['/configuration/pokemon-selection']);
   }
 
   private getBirthDaySubscription(): void {
