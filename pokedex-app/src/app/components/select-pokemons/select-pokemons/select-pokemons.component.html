@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row" *ngIf="!isFetching" >
 
-        <!-- trainer data -->
+        
         <div class="col-sm-12 col-xl-12">
             <h2 class="header__text" style="font-weight: bold;">
                 ¡Ya casi términamos!
@@ -10,6 +10,7 @@
                 Revisa la información, y completa lo solicitado.
             </p>
         </div>
+        <!-- trainer data -->
         <div class="col-sm-12 col-xl-6">
             <app-profile-card [trainer]="trainer"></app-profile-card>
         </div>
@@ -17,11 +18,8 @@
 
         <!-- pokemon selection  -->
         <div class="col-sm-12 col-xl-6">
-
             <app-pokemon-list/>
-
         </div>
-
         <!-- pokemon selection  -->
     </div>
     <div class="row" *ngIf="isFetching">

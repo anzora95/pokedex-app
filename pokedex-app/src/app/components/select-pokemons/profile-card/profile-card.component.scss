@@ -1,61 +1,35 @@
-@import '../../account-form/account-form.component.scss';
 @import '../../../../styles.scss';
 
-.pokemon__list {
-  height: 50vh;
-  overflow-y: scroll;
-  padding: 5px 30px 0px 0px;
-}
-.pokemon__card {
-  background-color: #F2F2F2;
-  border-radius: 25px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 40px 0px 0px 0px;
-  cursor: pointer;
-  margin: 20px 0px;
-}
-.pokemon__image {
-  width: 96px;
-  height: 96px;
-  position: absolute;
-  z-index: 1;
-  transform: translate(5%,-95%);
-  margin: 0 auto;
-}
-.pokemon__description {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #01426A;
-  margin-top: 8px;
-  padding: 8px 0;
-  border-radius: 10px;
-}
-.pokemon__description__text {
-  color: white;
-  font-size: 12px;
-  font-weight: 800;
-  margin: 0 10px;
-}
-.yellow-background {
+.profile__card {
   background-color: #FFC600;
+  width: 392px;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  border-radius: 45px;
 }
-.pokemon__card__disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+.profile__card__title__preview {
+  font-size: 35px;
+  font-weight: 700;
+  color: #185A7D;
+  text-align: center;
 }
-.submit__button {
-  width: 222px;
-  height: 50px;
-  border-radius: 10px;
-  &:enabled {
-    background-color: #01426A;
-    color: white;
-  }
-  &:hover {
-    background-color: #185A7D;
-  }
-  &:active {
-    background-color: #2C85BC;
-  }
+.profile__card__title {
+  font-size: 24px;
+  font-weight: 500;
+  color: #4B4B4B;
+}
+.profile__card__hobbie__title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #4B4B4B;
+}
+.profile__card__hobbie__description {
+  font-size: 24px;
+  font-weight: 400;
+  color: #4B4B4B;
+}
+.round__image {
+  margin-top: 20px;
+  border: 20px solid white;
+  border-radius: 50%;
 }
