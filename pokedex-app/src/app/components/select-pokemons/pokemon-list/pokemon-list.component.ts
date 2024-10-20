@@ -130,7 +130,7 @@ export class PokemonListComponent implements OnInit, OnDestroy {
     console.log("seleccionados", this.pokemons.filter(p => p.isSelected))
     this.trainerService.storeTrainer(this.trainer);
     console.log(this.trainer);
-    // this.router.navigate(['/profile']);
+    this.router.navigate(['/profile']);
   }
 
   ngOnDestroy(): void {

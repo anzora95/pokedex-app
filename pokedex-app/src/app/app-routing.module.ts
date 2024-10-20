@@ -9,10 +9,9 @@ import { ProfileDataResolver } from './resolvers/profile-data.resolvers';
 const routes: Routes = [
   {path: 'configuration', component: AccountFormComponent },
   {path: 'configuration/pokemon-selection', component: SelectPokemonsComponent, canActivate: [profileGuard], resolve: {trainer: ProfileDataResolver}},
-  {path: 'profile', component: TrainerProfileComponent, resolve: {trainer: ProfileDataResolver}},
+  {path: 'profile', component: TrainerProfileComponent, resolve: {trainer: ProfileDataResolver}, canActivate: [profileGuard]},
   {path: '', pathMatch: 'full', redirectTo: 'profile'}
 ];
-// canActivate: [ProfileDataGuard],  resolve: {trainer: ProfileDataResolver}
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
