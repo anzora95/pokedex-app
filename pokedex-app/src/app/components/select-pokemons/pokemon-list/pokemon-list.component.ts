@@ -1,9 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Pokemon } from 'src/app/models/pokemon';
 import { PokemonService } from 'src/app/services/pokemon.service';
+import { Trainer } from 'src/app/models/trainer';
 import { TrainerService } from 'src/app/services/trainer.service';
 import { Pokelist } from 'src/app/models/pokelist';
 import { forkJoin, Observable } from 'rxjs';
-import { Pokemon } from 'src/app/models/pokemon';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -11,20 +15,23 @@ import { FormControl } from '@angular/forms';
   templateUrl: './pokemon-list.component.html',
   styleUrls: ['./pokemon-list.component.scss']
 })
-export class PokemonListComponent implements OnInit {
+export class PokemonListComponent implements OnInit, OnDestroy {
 
   isLoading: boolean;
+  private profileDataSubscription: Subscription;
   search: FormControl = new FormControl('');
   isLastPage = false;
   pokemons: Pokemon[] = [];
   allPokemons: Pokemon[] = [];
   allowSave: boolean = false;
+  trainer: Trainer;
 
-  constructor( private trainerService: TrainerService, private pokemonService: PokemonService){}
+  constructor( private trainerService: TrainerService, private pokemonService: PokemonService, private router: Router, private activatedRoute: ActivatedRoute){}
 
   ngOnInit(): void {
 
     this.getPage();
+    this.getProfileDataSubscription();
     
   }
 
@@ -43,6 +50,15 @@ export class PokemonListComponent implements OnInit {
       })
       
     }
+  }
+  private getProfileDataSubscription(): void {
+    this.profileDataSubscription = this.activatedRoute.data.subscribe(({trainer}: { trainer: Trainer })=>{
+      this.trainer = trainer;
+      // setTimeout(() => {
+      //   this.isFetching = false;
+      // }, 1000);  //simular 1 segundo de tiempo de carga de datos
+      this.preselectPokemons();
+    });
   }
 
   isCardDisabled(pokemon: Pokemon): boolean {
@@ -94,9 +110,31 @@ export class PokemonListComponent implements OnInit {
     this.updateAllowSave();
   }
 
+  private preselectPokemons(): void {
+    if (this.trainer && this.trainer.pokemons_owned) {
+      this.pokemons.forEach(pokemon => {
+        if (this.trainer.pokemons_owned.some(ownedPokemon => ownedPokemon.id === pokemon.id)) {
+          pokemon.isSelected = true;
+        }
+      });
+    }
+  }
+
   private updateAllowSave(): void {
     const selectedCount = this.pokemons.filter(p => p.isSelected).length;
     this.allowSave = selectedCount < 3;
+  }
+
+  submitSelection(): void {
+    this.trainer.pokemons_owned = this.pokemons.filter(p => p.isSelected);
+    console.log("seleccionados", this.pokemons.filter(p => p.isSelected))
+    this.trainerService.storeTrainer(this.trainer);
+    console.log(this.trainer);
+    this.router.navigate(['/profile']);
+  }
+
+  ngOnDestroy(): void {
+    this.profileDataSubscription.unsubscribe();
   }
 
 

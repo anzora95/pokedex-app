@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Trainer } from 'src/app/models/trainer';
 import { v4 as uuidv4 } from 'uuid';
@@ -11,7 +11,7 @@ import { TrainerService } from 'src/app/services/trainer.service';
   templateUrl: './account-form.component.html',
   styleUrls: ['./account-form.component.scss']
 })
-export class AccountFormComponent implements OnInit {
+export class AccountFormComponent implements OnInit, OnDestroy {
 
   isMinor: boolean = false;
   maxDate: Date = new Date;
@@ -175,6 +175,10 @@ export class AccountFormComponent implements OnInit {
     if (index >= 0) {
       this.selectedHobbies.splice(index, 1);
     }
+  }
+  
+  ngOnDestroy(): void {
+    this.birthDaySubscription.unsubscribe();
   }
 
 }

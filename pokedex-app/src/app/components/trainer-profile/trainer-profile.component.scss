@@ -1,0 +1,16 @@
+// @import '../../../styles.scss';
+
+.edit__button {
+    width: 134px;
+    background-color: white;
+    border: 1px solid #01426A;
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 8px 0px;
+  }
+  .pokemon__showcase {
+    height: 68vh;
+    overflow-y: scroll;
+    padding: 5px 30px 0px 0px;
+    margin-top: 10px;
+  }

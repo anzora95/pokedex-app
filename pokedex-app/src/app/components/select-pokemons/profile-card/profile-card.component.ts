@@ -13,7 +13,7 @@ export class ProfileCardComponent implements OnInit {
   defaultImageUrl: string = "../../../assets/icons/default_avatar.png";
   profileIcon: string | ArrayBuffer;
   profileIconName: string;
-  isPreview: boolean = false;
+  isPreview: boolean = true;
 
 ngOnInit(): void {
   
