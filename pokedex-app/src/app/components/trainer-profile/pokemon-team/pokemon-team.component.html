@@ -1,0 +1,56 @@
+<mat-card class="card__showcase">
+    <mat-card-content>
+        <div class="card__showcase__container">
+            <div class="w-35">
+                <img class="card__showcase__img" [src]="imageUrl" alt="Pokemon-image">
+                <br>
+                <span class="card__showcase__pokemon__name">{{pokemon.name | titlecase}}</span>
+                <br>
+                <span class="card__showcase__pokemon__type">
+                    {{getPokemonType(pokemon.types,1) | titlecase}}/{{getPokemonType(pokemon.types,2) | titlecase}}
+                </span>
+            </div>
+            <!-- pokemon stats section -->
+            <div class="stat__container w-65">
+                <div class="stat__item w-100">
+                    <div class="stat__progress w-100">
+                        <div class="w-50 card__showcase__pokemon__stats">HP:</div>
+                        <div class="w-50">
+                            <app-pokemon-stat-bar [color]="getPokemonType(pokemon.types,0)" [value]="pokemon.stats[0].base_stat" [maxValue]="255"></app-pokemon-stat-bar>
+                        </div>
+                    </div>
+                    <div class="stat__progress w-100">
+                        <div class="w-50 card__showcase__pokemon__stats">Ataque:</div>
+                        <div class="w-50">
+                            <app-pokemon-stat-bar [color]="getPokemonType(pokemon.types,0)" [value]="pokemon.stats[1].base_stat" [maxValue]="190"></app-pokemon-stat-bar>
+                        </div>
+                    </div>
+                    <div class="stat__progress w-100">
+                        <div class="w-50 card__showcase__pokemon__stats">Defensa:</div>
+                        <div class="w-50">
+                            <app-pokemon-stat-bar [color]="getPokemonType(pokemon.types,0)" [value]="pokemon.stats[2].base_stat" [maxValue]="230"></app-pokemon-stat-bar>
+                        </div>
+                    </div>
+                    <div class="stat__progress w-100">
+                        <div class="w-50 card__showcase__pokemon__stats">Ataque Especial:</div>
+                        <div class="w-50">
+                            <app-pokemon-stat-bar [color]="getPokemonType(pokemon.types,0)" [value]="pokemon.stats[3].base_stat" [maxValue]="194"></app-pokemon-stat-bar>
+                        </div>
+                    </div>
+                    <div class="stat__progress w-100">
+                        <div class="w-50 card__showcase__pokemon__stats">Defensa Especial:</div>
+                        <div class="w-50">
+                            <app-pokemon-stat-bar [color]="getPokemonType(pokemon.types,0)" [value]="pokemon.stats[4].base_stat" [maxValue]="230"></app-pokemon-stat-bar>
+                        </div>
+                    </div>
+                    <div class="stat__progress w-100">
+                        <div class="w-50 card__showcase__pokemon__stats">Defensa:</div>
+                        <div class="w-50">
+                            <app-pokemon-stat-bar [color]="getPokemonType(pokemon.types,0)" [value]="pokemon.stats[5].base_stat" [maxValue]="180"></app-pokemon-stat-bar>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

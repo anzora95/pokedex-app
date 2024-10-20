@@ -32,6 +32,9 @@ import { ProfileCardComponent } from './components/select-pokemons/profile-card/
 import { SelectPokemonsComponent } from './components/select-pokemons/select-pokemons/select-pokemons.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PokemonService } from './services/pokemon.service';
+import { PokemonTeamComponent } from './components/trainer-profile/pokemon-team/pokemon-team.component';
+import { TrainerProfileComponent } from './components/trainer-profile/trainer-profile.component';
+import { PokemonStatBarComponent } from './extra/pokemon-stat-bar/pokemon-stat-bar.component';
 
 
 // import Provi
@@ -44,6 +47,9 @@ import { PokemonService } from './services/pokemon.service';
     PokemonListComponent,
     ProfileCardComponent,
     SelectPokemonsComponent,
+    PokemonTeamComponent,
+    TrainerProfileComponent,
+    PokemonStatBarComponent,
     
   ],
   imports: [

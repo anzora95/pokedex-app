@@ -1,0 +1,48 @@
+@import '../../../../styles.scss';
+
+.card__showcase {
+    width: 100%;
+    background-color: #F2F2F2;
+    border-radius: 20px;
+    margin-bottom: 25px;
+  }
+  .card__showcase__container {
+    display: flex;
+    flex-direction: row;
+    padding: 10px 0px;
+  }
+  .card__showcase__img {
+    width: 150px;
+    height: 150px;
+  }
+  .card__showcase__pokemon__name {
+    font-size: 30px;
+    font-weight: 700;
+    color: #000000;
+  }
+  .card__showcase__pokemon__type {
+    font-size: 18px;
+    font-weight: 400;
+    color: #000000;
+  }
+  .card__showcase__pokemon__stats {
+    font-size: 20px;
+    font-weight: 400;
+    color: #4B4B4B;
+  }
+  .stat__container {
+    display: flex;
+  }
+  .stat__item {
+    display: flex;
+    flex-direction: column;
+    div {
+      margin-top: 5px;
+    }
+  }
+  .stat__progress {
+    display: flex;
+    div {
+      margin-top: 0px;
+    }
+  }
