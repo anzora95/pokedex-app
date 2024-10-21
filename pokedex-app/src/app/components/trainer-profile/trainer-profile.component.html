@@ -35,14 +35,14 @@
             </div>
             <div>
                 <div class="row pokemon__showcase">
-                    <div class="col-xl-6" *ngFor="let pokemon of pokemons">
+                    <div class="col-xl-12" *ngFor="let pokemon of pokemons">
                          <app-pokemon-team [pokemon]="pokemon"></app-pokemon-team>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- <div class="row" *ngIf="isFetching">
+    <div class="row" *ngIf="isFetching">
         <app-loading></app-loading>
-    </div> -->
+    </div>
 </div>

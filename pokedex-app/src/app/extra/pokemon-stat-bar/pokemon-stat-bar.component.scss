@@ -46,24 +46,92 @@ $transparent: transparent;
 $black: #000000;
 $white: #ffffff;
 
-$general: ('black', $black), ('white', $white), ('grass', $grass), ('grass-light', $grass-light), ('fire', $fire), ('fire-light', $fire-light), ('water', $water), ('water-light', $water-light), ('normal', $normal), ('normal-light', $normal-light), ('flying', $flying), ('flying-light', $flying-light), ('bug', $bug) , ('bug-light', $bug-light) , ('poison', $poison), ('poison-light', $poison-light), ('electric', $electric), ('electric-light', $electric-light), ('ground', $ground) , ('ground-light', $ground-light) , ('fighting', $fighting) , ('fighting-light',$fighting-light) , ('psychic', $psychic) , ('psychic-light', $psychic-light) , ('rock', $rock) , ('rock-light', $rock-light) , ('ice' , $ice) , ('ice-light' , $ice-light) , ('ghost', $ghost) , ('ghost-light',$ghost-light) , ('dragon',$dragon) , ('dragon-light',$dragon-light) , ('dark',$dark) , ('dark-light',$dark-light) , ('steel',$steel) , ('steel-light',$steel-light) , ('fairy',$fairy) , ('fairy-light' , $fairy-light) , ('gray', $gray);
+$general: ('black', $black), 
+('white', $white), 
+('grass', $grass), 
+('grass-light', $grass-light), 
+('fire', $fire), 
+('fire-light', $fire-light), 
+('water', $water), 
+('water-light', $water-light), 
+('normal', $normal), 
+('normal-light', $normal-light), 
+('flying', $flying), 
+('flying-light', $flying-light), 
+('bug', $bug) , 
+('bug-light', $bug-light) , 
+('poison', $poison), 
+('poison-light', $poison-light), 
+('electric', $electric), 
+('electric-light', $electric-light), 
+('ground', $ground) , 
+('ground-light', $ground-light) , 
+('fighting', $fighting) , 
+('fighting-light',$fighting-light) , 
+('psychic', $psychic) , 
+('psychic-light', $psychic-light) , 
+('rock', $rock) , 
+('rock-light', $rock-light) , 
+('ice' , $ice) , 
+('ice-light' , $ice-light) , 
+('ghost', $ghost) , 
+('ghost-light',$ghost-light) , 
+('dragon',$dragon) , 
+('dragon-light',$dragon-light) , 
+('dark',$dark) , 
+('dark-light',$dark-light) , 
+('steel',$steel) , 
+('steel-light',$steel-light) , 
+('fairy',$fairy) , 
+('fairy-light' , $fairy-light) , 
+('gray', $gray);
+
+// @each $color in $general {
+//   $name: nth($color, 1);
+//   $value: nth($color, 2);
+//   $lightName: $name + '-light';
+//   $lightValue: null;
+//   @each $lightColor in $general {
+//     @if nth($lightColor, 1) == $lightName{
+//     $lightValue: nth($lightColor, 2);}
+//   }
+//   .progress-bar-color-#{$name} .mat-progress-bar-fill::after {
+//     background-color: $value !important;
+//   }
+//   .progress-bar-color-#{$name} {
+//     background-color: $lightValue !important;
+//   }
+// }
+// .progress__bar__container {
+//   margin-top: 8%;
+// }
+
 
 @each $color in $general {
   $name: nth($color, 1);
   $value: nth($color, 2);
   $lightName: $name + '-light';
   $lightValue: null;
+
+  // Busca el color light en la lista
   @each $lightColor in $general {
-    @if nth($lightColor, 1) == $lightName{
-    $lightValue: nth($lightColor, 2);}
+    @if nth($lightColor, 1) == $lightName {
+      $lightValue: nth($lightColor, 2);
+    }
   }
+
+  // Si no encuentra un color light, usa el valor base como respaldo
+  $lightValue: if($lightValue == null, $value, $lightValue);
+
   .progress-bar-color-#{$name} .mat-progress-bar-fill::after {
     background-color: $value !important;
   }
+  
   .progress-bar-color-#{$name} {
     background-color: $lightValue !important;
   }
 }
+
 .progress__bar__container {
   margin-top: 8%;
 }

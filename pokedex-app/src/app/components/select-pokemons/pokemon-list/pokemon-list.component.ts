@@ -19,6 +19,7 @@ export class PokemonListComponent implements OnInit, OnDestroy {
 
   isLoading: boolean;
   private profileDataSubscription: Subscription;
+  isFetching: boolean = true;
   search: FormControl = new FormControl('');
   isLastPage = false;
   pokemons: Pokemon[] = [];
@@ -54,15 +55,15 @@ export class PokemonListComponent implements OnInit, OnDestroy {
   private getProfileDataSubscription(): void {
     this.profileDataSubscription = this.activatedRoute.data.subscribe(({trainer}: { trainer: Trainer })=>{
       this.trainer = trainer;
-      //    setTimeout(() => {
-      //    this.isFetching = false;
-      //  }, 1000);  //simular 1 segundo de tiempo de carga de datos
+          setTimeout(() => {
+         this.isFetching = false;
+        }, 1000);  //simular 1 segundo de tiempo de carga de datos
       this.preselectPokemons();
     });
   }
 
   isCardDisabled(pokemon: Pokemon): boolean {
-    const selectedCount = this.pokemons.filter(p => p.isSelected).length;
+    const selectedCount = this.getSelectedCount();
     return selectedCount >= 3 && !pokemon.isSelected;
   }
 
@@ -76,7 +77,7 @@ export class PokemonListComponent implements OnInit, OnDestroy {
       this.pokemons.push(...pokemons);
       this.allPokemons = [...this.pokemons];
       this.isLoading = false;
-      // this.preselectPokemons();
+      this.preselectPokemons();
       // this.updateAllowSave();
     });
   }
@@ -96,7 +97,7 @@ export class PokemonListComponent implements OnInit, OnDestroy {
 
   handlePokemonSelection(pokemon: Pokemon): void {
     if (!pokemon.isSelected) {
-      const selectedCount = this.pokemons.filter(p => p.isSelected).length;
+      const selectedCount = this.getSelectedCount();
       if (selectedCount < 3) {
         pokemon.isSelected = true;
       } else {
@@ -121,12 +122,12 @@ export class PokemonListComponent implements OnInit, OnDestroy {
   }
 
   private updateAllowSave(): void {
-    const selectedCount = this.pokemons.filter(p => p.isSelected).length;
+    const selectedCount = this.getSelectedCount();
     this.allowSave = selectedCount < 3;
   }
 
   submitSelection(): void {
-    this.trainer.pokemons_owned = this.pokemons.filter(p => p.isSelected);
+    this.trainer.pokemons_owned = this.allPokemons.filter(p => p.isSelected);
     console.log("seleccionados", this.pokemons.filter(p => p.isSelected))
     this.trainerService.storeTrainer(this.trainer);
     console.log(this.trainer);
@@ -137,5 +138,15 @@ export class PokemonListComponent implements OnInit, OnDestroy {
     this.profileDataSubscription.unsubscribe();
   }
 
+  printfu(){
+    const selectedCount = this.allPokemons.filter(p => p.isSelected).length;
+    console.log(selectedCount);
+  }
+
+
+  getSelectedCount():number{
+
+    return this.allPokemons.filter(p => p.isSelected).length;
+  }
 
 }
