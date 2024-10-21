@@ -4,7 +4,7 @@
             <span class=" profile__card__title__preview">{{trainer.name | titlecase}}</span>
         </mat-card-header>
 
-        <mat-card-header *ngIf="!isPreview" class="d-flex justify-content-between">
+        <mat-card-header *ngIf="!isPreview" class="d-flex justify-content-start">
             <span class="profile__card__title">Entrenador</span>
         </mat-card-header>
 
@@ -28,8 +28,7 @@
                         {{getHobbieName(trainer.hobbies[0].toString())}}
                     </span>
                     <br>
-                    <span>{{birthdate }} años</span>
-                    <!-- <span>{{birthdate | age}} años</span> -->
+                    <span>{{trainer.age }} años</span>
                     <br>
                     <span>{{trainer.dui ? trainer.dui : ""}}</span>
                 </div>

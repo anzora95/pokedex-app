@@ -63,16 +63,13 @@
                                           </mat-chip>
                                         </mat-chip-listbox>
                                       </mat-select-trigger>
-                                    <!-- <mat-option value="soccer">Jugar Fútbol</mat-option>
+
+                                    <mat-option value="soccer">Jugar Fútbol</mat-option>
                                     <mat-option value="basquetball">Jugar Basquetball</mat-option>
                                     <mat-option value="tennis">Jugar Tennis</mat-option>
                                     <mat-option value="voleiball">Jugar Voleiball</mat-option>
                                     <mat-option value="fifa">Jugar Fifa</mat-option>
-                                    <mat-option value="gaming">Jugar Videojuegos</mat-option> -->
-
-                                    <mat-option *ngFor="let hobby of hobbies" [value]="hobby">
-                                        {{ hobby }}
-                                      </mat-option>
+                                    <mat-option value="gaming">Jugar Videojuegos</mat-option>
                                 </mat-select>
                             </mat-form-field>
                             <mat-form-field class="form__fields" appearance="outline">
@@ -83,9 +80,8 @@
                             </mat-form-field>
                             <mat-form-field class="form__fields" appearance="outline" *ngIf="!isMinor">
                                 <mat-label>DUI</mat-label>
-                                <input matInput formControlName="dui" appDuiFormat mask="00000000-0" >
+                                <input matInput formControlName="dui" mask="00000000-0" [dropSpecialCharacters]="false">
                                 <mat-error *ngIf="form.get('dui').hasError('isvalidDUI')">Número de DUI inválido</mat-error>
-
                             </mat-form-field>
                             <mat-form-field class="form__fields" appearance="outline" *ngIf="isMinor" >
                                 <mat-label>Carnet de minoridad</mat-label>
@@ -102,10 +98,7 @@
             </div>
         </div>
     </div>
-    <div
-        class="row"
-        *ngIf="isFetching"
-    >
-        <!-- <app-loading></app-loading> -->
+    <div class="row" *ngIf="isFetching">
+        <app-loading></app-loading>
     </div>
 </div>

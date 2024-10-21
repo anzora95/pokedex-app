@@ -13,7 +13,7 @@ import { TrainerService } from 'src/app/services/trainer.service';
 })
 export class TrainerProfileComponent implements OnInit {
 
-  isFetching: boolean = false;
+  isFetching: boolean = true;
   trainer: Trainer;
   profileDataSubscription: Subscription;
   pokemons: Pokemon[];
@@ -34,11 +34,20 @@ export class TrainerProfileComponent implements OnInit {
       this.pokemons = trainer.pokemons_owned;
      
       // console.log(this.trainer);
-      /* 
-      setTimeout(() => {
-        this.isFetching = false;
-      }, 1000);  //simular 1 segundo de tiempo de carga de datos */
+      
+      // setTimeout(() => {
+      //   this.isFetching = false;
+      // }, 1000);  //simular 1 segundo de tiempo de carga de datos 
     });
   }
+
+  onProfileEditButton() {
+    this.router.navigate(['/configuration']);
+  }
+
+  onPokemonEditButton() {
+    this.router.navigate(['/configuration/pokemon-selection']);
+  }
+
 
 }

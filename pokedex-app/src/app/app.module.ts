@@ -35,6 +35,7 @@ import { PokemonService } from './services/pokemon.service';
 import { PokemonTeamComponent } from './components/trainer-profile/pokemon-team/pokemon-team.component';
 import { TrainerProfileComponent } from './components/trainer-profile/trainer-profile.component';
 import { PokemonStatBarComponent } from './extra/pokemon-stat-bar/pokemon-stat-bar.component';
+import { LoadingComponent } from './extra/loading/loading/loading.component';
 
 
 // import Provi
@@ -50,6 +51,7 @@ import { PokemonStatBarComponent } from './extra/pokemon-stat-bar/pokemon-stat-b
     PokemonTeamComponent,
     TrainerProfileComponent,
     PokemonStatBarComponent,
+    LoadingComponent,
     
   ],
   imports: [

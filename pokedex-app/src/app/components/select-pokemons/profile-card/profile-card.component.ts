@@ -1,4 +1,5 @@
 import { Component , Input, OnInit} from '@angular/core';
+import { Router } from '@angular/router';
 import { Trainer } from 'src/app/models/trainer';
 
 @Component({
@@ -13,10 +14,12 @@ export class ProfileCardComponent implements OnInit {
   defaultImageUrl: string = "../../../assets/icons/default_avatar.png";
   profileIcon: string | ArrayBuffer;
   profileIconName: string;
-  isPreview: boolean = true;
+  isPreview: boolean = false;
+
+  constructor(private router: Router) {}
 
 ngOnInit(): void {
-  
+  this.checkForCurrentRoute();
   this.birthdate = new Date(this.trainer.birthdate);
 }
 
@@ -36,6 +39,15 @@ ngOnInit(): void {
         return "Jugar Videojuegos";
       default:
         return "N/A";
+    }
+  }
+
+  private checkForCurrentRoute(): void {
+    const currentRoute = this.router.url;
+    if (currentRoute === '/configuration/pokemon-selection') {
+      this.isPreview = true;
+    } else {
+      this.isPreview = false;
     }
   }
 

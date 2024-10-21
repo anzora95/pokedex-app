@@ -7,8 +7,8 @@
                     <!-- | titlecase | firstName -->
                 </h2>
                 <div class="align__center">
-                    <button class=" edit__button" >
-                        <!-- (click)="onProfileEditButton()" -->
+                    <button class=" edit__button" (click)="onProfileEditButton()" >
+                        <!--  -->
                         <div class="d-flex justify-content-center">
                             <i class="fa-solid fa-pencil ml-3"></i>
                             <span class="button__text">  Editar perfil</span>
@@ -25,8 +25,8 @@
         <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
             <div class="d-flex justify-content-between">
                 <span class="title__text">Pokémon</span>
-                <button class="mat-raised-button edit__button" >
-                    <!-- (click)="onPokemonEditButton()" -->
+                <button class="mat-raised-button edit__button" (click)="onPokemonEditButton()" >
+                    <!--  -->
                     <div class="d-flex justify-content-center">
                         <i class="fa-solid fa-pencil ml-3"></i>
                         <span class="button__text">  Editar</span>
@@ -35,14 +35,14 @@
             </div>
             <div>
                 <div class="row pokemon__showcase">
-                    <div class="col-xl-6" *ngFor="let pokemon of pokemons">
+                    <div class="col-xl-12" *ngFor="let pokemon of pokemons">
                          <app-pokemon-team [pokemon]="pokemon"></app-pokemon-team>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- <div class="row" *ngIf="isFetching">
+    <div class="row" *ngIf="isFetching">
         <app-loading></app-loading>
-    </div> -->
+    </div>
 </div>

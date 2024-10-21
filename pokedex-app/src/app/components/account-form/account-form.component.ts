@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Trainer } from 'src/app/models/trainer';
 import { v4 as uuidv4 } from 'uuid';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { TrainerService } from 'src/app/services/trainer.service';
 
@@ -15,33 +15,34 @@ export class AccountFormComponent implements OnInit, OnDestroy {
 
   isMinor: boolean = false;
   maxDate: Date = new Date;
-  private editMode: boolean = false;
+  editMode: boolean = false;
   form!: FormGroup;
-  isFetching: boolean = false;
+  isFetching: boolean = true;
   defaultImageUrl: string = "../../../assets/icons/default_avatar.png";
   profileIcon!: string | ArrayBuffer;
   profileIconName: string = "Adjunta una foto";
   trainer: Trainer;
   private birthDaySubscription: Subscription;
-
-  hobbies: string[] = ['Jugar Fútbol', 'Leer', 'Cocinar', 'Nadar', 'Viajar'];
+  private profileDataSubscription: Subscription;
+  hobbies: string[] = ['soccer', 'basquetball', 'tennis', 'voleiball', 'fifa', 'gaming'];
   selectedHobbies: string[] = [];
 
-  constructor(private fb: FormBuilder, private router: Router, private trainerService: TrainerService) { }
+  constructor(readonly fb: FormBuilder, readonly router: Router, readonly trainerService: TrainerService,readonly activatedRoute: ActivatedRoute,) { }
 
   ngOnInit() {
 
     this.initializeForm();
     this.getBirthDaySubscription();
+    this.getProfileDataSubscription();
   }
 
   private initializeForm(): void {
     this.form = this.fb.group({
       name: ['', Validators.required],
       hobbies: [''],
-      birthday: [null, Validators.required],
-      dui: [null, [this.createDuiVerification()]],
-      minors_id: [null]
+      birthday: [null, [Validators.required]],
+      dui: [null, [this.createDuiVerification(), Validators.minLength(9)]],
+      minors_id: [null, [Validators.minLength(9)]]
     },{updateOn: 'change'});
   }
 
@@ -63,20 +64,36 @@ export class AccountFormComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log("formulario enviado");
+    let age: number = this.calculateAge(this.form.get('birthday').value);
+    if(this.editMode){
+      
+      this.trainer.name = this.form.get('name').value;
+      this.trainer.hobbies = this.form.get('hobbies').value;
+      this.trainer.birthdate = this.form.get('birthday').value;
+      this.trainer.age = age;
+      this.trainer.dui = this.form.get('dui').value;
+      this.trainer.minors_id = this.form.get('minors_id').value;
+      this.trainer.image_path = this.profileIcon ? this.profileIcon as string : this.defaultImageUrl;
+      this.trainerService.storeTrainer(this.trainer);
+      this.router.navigate(['/profile']);
+    }
+    else{
+
+    // let age: number = this.calculateAge(this.form.get('birthday').value);
     this.trainer = new Trainer(
       this.form.get('name').value,
       uuidv4(),
       this.profileIcon ? this.profileIcon as string : this.defaultImageUrl,
       this.form.get('hobbies').value,
       this.form.get('birthday').value,
+      age,
       this.form.get('dui').value,
       this.form.get('minors_id').value,
       null,
     );
-
     this.trainerService.storeTrainer(this.trainer);
     this.router.navigate(['/configuration/pokemon-selection']);
+    }
   }
 
   private getBirthDaySubscription(): void {
@@ -110,27 +127,24 @@ export class AccountFormComponent implements OnInit, OnDestroy {
 
   private updateDuiValidator() {
     const duiControl = this.form.get('dui');
+    const minorControl = this.form.get('minors_id');
+    
     if (duiControl) {
       if (this.isMinor) {
         duiControl.clearValidators();
+        minorControl.setValidators([Validators.minLength(9)]);
+
       } else {
-        duiControl.setValidators([Validators.required, this.customDuiValidator]);
+        duiControl.setValidators([Validators.required, this.createDuiVerification(), Validators.minLength(9)]);
+        minorControl.clearValidators();
       }
       duiControl.updateValueAndValidity();
+      minorControl.updateValueAndValidity();
+
     }
+    
   }
 
-  private customDuiValidator() {
-    return (control) => {
-      const value = control.value;
-      if (value) {
-        const pattern = /^\d{8}-\d{1}$/;
-        const isValid = pattern.test(value);
-        return isValid ? null : { invalidDuiNumber: true };
-      }
-      return null;
-    };
-  }
 
   createDuiVerification() {
     return (control: AbstractControl): ValidationErrors | null => {
@@ -149,8 +163,10 @@ export class AccountFormComponent implements OnInit, OnDestroy {
         value == '77777777-7' ||
         value == '88888888-8' ||
         value == '99999999-9'
-      )
+      ){
+        console.log('entro en el secuencial')
         return { isvalidDUI: true };
+      }
       if (parts !== null) {
         const digits = parts[1];
         const dig_ve = parseInt(parts[2], 10);
@@ -163,6 +179,7 @@ export class AccountFormComponent implements OnInit, OnDestroy {
           ? null
           : { isvalidDUI: true };
       } else {
+
         return {
           isvalidDUI: true
         };
@@ -174,11 +191,39 @@ export class AccountFormComponent implements OnInit, OnDestroy {
     const index = this.selectedHobbies.indexOf(hobby);
     if (index >= 0) {
       this.selectedHobbies.splice(index, 1);
+      this.form.get('hobbies')?.setValue(this.selectedHobbies);
+      
     }
+  }
+
+  private getProfileDataSubscription(): void {
+    this.profileDataSubscription = this.activatedRoute.data.subscribe(({trainer}: { trainer: Trainer })=>{
+      setTimeout(() => {
+        this.isFetching = false;
+      }, 1000);  //simular 1 segundo de tiempo de carga de datos
+      if (trainer === null) {
+        this.editMode = false;
+        this.trainer = null;
+      } else {
+        this.editMode = true;
+        this.trainer = trainer;
+        this.profileIcon=trainer.image_path;
+        this.form.patchValue({
+          name: trainer.name,
+          hobbies: trainer.hobbies,
+          birthday: trainer.birthdate,
+          dui: trainer.dui,
+          minors_id: trainer.minors_id
+        });
+        this.selectedHobbies = this.form.get('hobbies').value;
+      }
+    })
   }
   
   ngOnDestroy(): void {
     this.birthDaySubscription.unsubscribe();
+    this.profileDataSubscription.unsubscribe();
   }
+
 
 }

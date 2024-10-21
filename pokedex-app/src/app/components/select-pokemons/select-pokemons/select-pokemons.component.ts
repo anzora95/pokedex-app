@@ -12,7 +12,7 @@ import { TrainerService } from 'src/app/services/trainer.service';
 })
 export class SelectPokemonsComponent implements OnInit{
 
-  isFetching: boolean = false;
+  isFetching: boolean = true;
   trainer: Trainer;
   private profileDataSubscription: Subscription;
 
