@@ -54,9 +54,9 @@ export class PokemonListComponent implements OnInit, OnDestroy {
   private getProfileDataSubscription(): void {
     this.profileDataSubscription = this.activatedRoute.data.subscribe(({trainer}: { trainer: Trainer })=>{
       this.trainer = trainer;
-      // setTimeout(() => {
-      //   this.isFetching = false;
-      // }, 1000);  //simular 1 segundo de tiempo de carga de datos
+      //    setTimeout(() => {
+      //    this.isFetching = false;
+      //  }, 1000);  //simular 1 segundo de tiempo de carga de datos
       this.preselectPokemons();
     });
   }

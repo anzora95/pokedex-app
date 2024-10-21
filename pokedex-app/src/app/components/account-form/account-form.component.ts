@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Trainer } from 'src/app/models/trainer';
 import { v4 as uuidv4 } from 'uuid';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { TrainerService } from 'src/app/services/trainer.service';
 
@@ -15,7 +15,7 @@ export class AccountFormComponent implements OnInit, OnDestroy {
 
   isMinor: boolean = false;
   maxDate: Date = new Date;
-  private editMode: boolean = false;
+  editMode: boolean = false;
   form!: FormGroup;
   isFetching: boolean = false;
   defaultImageUrl: string = "../../../assets/icons/default_avatar.png";
@@ -23,16 +23,18 @@ export class AccountFormComponent implements OnInit, OnDestroy {
   profileIconName: string = "Adjunta una foto";
   trainer: Trainer;
   private birthDaySubscription: Subscription;
+  private profileDataSubscription: Subscription;
 
-  hobbies: string[] = ['Jugar Fútbol', 'Leer', 'Cocinar', 'Nadar', 'Viajar'];
+  hobbies: string[] = ['soccer', 'basquetball', 'tennis', 'voleiball', 'fifa', 'gaming'];
   selectedHobbies: string[] = [];
 
-  constructor(private fb: FormBuilder, private router: Router, private trainerService: TrainerService) { }
+  constructor(private fb: FormBuilder, private router: Router, private trainerService: TrainerService,private activatedRoute: ActivatedRoute,) { }
 
   ngOnInit() {
 
     this.initializeForm();
     this.getBirthDaySubscription();
+    this.getProfileDataSubscription();
   }
 
   private initializeForm(): void {
@@ -63,20 +65,35 @@ export class AccountFormComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log("formulario enviado");
+
+    if(this.editMode){
+      this.trainer.name = this.form.get('name').value;
+      this.trainer.hobbies = this.form.get('hobbies').value;
+      this.trainer.birthdate = this.form.get('birthday').value;
+      this.trainer.dui = this.form.get('dui').value;
+      this.trainer.minors_id = this.form.get('minors_id').value;
+      this.trainer.image_path = this.profileIcon ? this.profileIcon as string : this.defaultImageUrl;
+      this.trainerService.storeTrainer(this.trainer);
+      this.router.navigate(['/profile']);
+    }
+    else{
+
+    let age: number = this.calculateAge(this.form.get('birthday').value);
+    // console.log(age);
     this.trainer = new Trainer(
       this.form.get('name').value,
       uuidv4(),
       this.profileIcon ? this.profileIcon as string : this.defaultImageUrl,
       this.form.get('hobbies').value,
       this.form.get('birthday').value,
+      age,
       this.form.get('dui').value,
       this.form.get('minors_id').value,
       null,
     );
-
     this.trainerService.storeTrainer(this.trainer);
     this.router.navigate(['/configuration/pokemon-selection']);
+    }
   }
 
   private getBirthDaySubscription(): void {
@@ -176,9 +193,35 @@ export class AccountFormComponent implements OnInit, OnDestroy {
       this.selectedHobbies.splice(index, 1);
     }
   }
+
+  private getProfileDataSubscription(): void {
+    this.profileDataSubscription = this.activatedRoute.data.subscribe(({trainer}: { trainer: Trainer })=>{
+      setTimeout(() => {
+        this.isFetching = false;
+      }, 1000);  //simular 1 segundo de tiempo de carga de datos
+      if (trainer === null) {
+        this.editMode = false;
+        this.trainer = null;
+        console.log("el trainer aparece como null");
+      } else {
+        console.log("el trainer no aparece como null");
+        console.log(trainer);
+        this.editMode = true;
+        this.trainer = trainer;
+        this.form.patchValue({
+          name: trainer.name,
+          hobbies: trainer.hobbies,
+          birthday: trainer.birthdate,
+          dui: trainer.dui,
+          minors_id: trainer.minors_id
+        });
+      }
+    })
+  }
   
   ngOnDestroy(): void {
     this.birthDaySubscription.unsubscribe();
+    this.profileDataSubscription.unsubscribe();
   }
 
 }

@@ -41,4 +41,13 @@ export class TrainerProfileComponent implements OnInit {
     });
   }
 
+  onProfileEditButton() {
+    this.router.navigate(['/configuration']);
+  }
+
+  onPokemonEditButton() {
+    this.router.navigate(['/configuration/pokemon-selection']);
+  }
+
+
 }
