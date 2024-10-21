@@ -180,7 +180,6 @@ export class AccountFormComponent implements OnInit, OnDestroy {
           : { isvalidDUI: true };
       } else {
 
-
         return {
           isvalidDUI: true
         };
@@ -208,6 +207,7 @@ export class AccountFormComponent implements OnInit, OnDestroy {
       } else {
         this.editMode = true;
         this.trainer = trainer;
+        this.profileIcon=trainer.image_path;
         this.form.patchValue({
           name: trainer.name,
           hobbies: trainer.hobbies,

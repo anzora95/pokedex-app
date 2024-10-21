@@ -16,6 +16,8 @@ export class PokemonTeamComponent implements OnInit {
   }
 
   getPokemonType(list: any[], index: number) {
+
+    console.log(list.filter(x => x.slot === index)[0]?.type.name);
     return list.filter(x => x.slot === index)[0]?.type.name;
   }
 
